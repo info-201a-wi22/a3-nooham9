@@ -1,0 +1,54 @@
+---
+title: "Disproportionate Incarceration of Black People in U.S. Counties"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include = F, echo = F}
+library(dplyr)
+library(stringr)
+library(tidyverse)
+library(ggplot2)
+library(usmap)
+library(reshape2)
+library(knitr)
+source("../source/Data_wrangling.R")
+```
+
+## Introduction and Summary Statistics
+```{r, include=F, echo=F}
+source("../source/Data_wrangling.R")
+highest_jail_pop0 <- print(highest_jail_pop)
+highest_black_jail_pop0 <- print(highest_black_jail_pop)
+highest_black_pop0 <- print(highest_black_pop)
+highest_black_overrep0 <- print(highest_black_overrep)
+highest_black_overrep_state0 <- print(highest_black_overrep_state)
+ave_black_overrep0 <- round(ave_black_overrep, digits = 2)
+ave_black_overrep1 <- round(ave_black_overrep, digits = 0)
+percent_overrep0 <- round(percent_overrep, digits = 2)
+```
+Data from the Vera Institute includes data on incarceration for different demographics in the United States, and it can be used to evaluate the or support the understanding that Black Americans are overly targeted for incarcerations. Focusing specifically on the jail data about Black populations both in and outside of jail can limit the scope to that specific goal. Looking through this data set, the county with the highest number of people in jail is `r highest_jail_pop0`. This correlates with the county with the highest number of black people in jail, which is also `r highest_black_jail_pop0`. That seems logical, however once you see that the highest black population in the U.S is in `r highest_black_pop0`, it seems that incarceration demographics are not only based on the racial demographics of an area. Seeing this difference opens up the question on if this phenomenon occurs more broadly. Are black people in the U.S over-represented in jails, as in, are there higher proportions of black people that make up jail populations than the proportions of black people that make up those same counties they live in? If they are higher, that means black people are over-represented in jail populations compared to the larger population in that county, it means that black people are more likely to occupy jails than the rest of the population, and it means that blackness is a variable in whether or not a person is incarcerated in the U.S. This can be quantified by taking the ratio of the black proportion in jail to the black proportion in a county. On average, this ratio is `r ave_black_overrep0`, meaning black people are on average over-represented in jails by a factor of `r ave_black_overrep1`. Over-representation, in these terms, is highest in `r highest_black_overrep0`, `r highest_black_overrep_state0`. The proportion of black people in jail and out of jail within counties should ideally be equal with a ratio of one, meaning racial demographics in jail are indeed representative of racial demographics outside of jail, if incarceration had nothing to do with race and racial groups were equally and proportionately incarcerated. If this ratio is more than one, that means black people are over-represented in jail in that county. To see how this applies nationally, `r percent_overrep0` percent of counties have black populations that are over-represented in jail. 
+
+## Jail population over time
+```{r, include=T, echo=F}
+plot(line_graph)
+```
+  
+This line graph looks more broadly at the question of how race plays into jail incarceration over time. Each line shows the average proportion of those in jail out of that race's total population (ages 15 to 64 who could be legally incarcerated). This shows the proportion of each racial group that is incarcerated, how much is sucked out of a community. This graph shows that black people have a much higher and much less stable proportion of people in jail. White and Asian proportions are relatively low and have remained consistent over 2000 to 2010, and Native and Latinx proportions are in the middle.  
+
+## Comparing the Black demographic and the Black demographic in jail.
+```{r, include=T, echo=F, message = F}
+plot(scatter_plot)
+```
+  
+This chart addresses the question of representation and if prisons over-represent Black people. Each point represents a county, the x-axis is the proportion of Black people out of the county population, and the y-axis is the proportion of Black people in jail out of the jailed population. Ideally it would be a perfect positive linear correlation with a slope of one, but the slope of this trend line is approximately 1.67, so that means black people are incarcerated disproportionately to their population size.  
+
+## Over-representation of Black people in prisons compared to Black demographics by state
+```{r, include=T, echo=F}
+plot(map_chart)
+```
+  
+This map shows how states over-represent the black population in jails, over incarcerating the Black population. Here it is visible that the states that over-represent their black population in jail the most are Minnesota, Pennsylvania, and Texas. Nebraska has the lowest of this value, however Nebraska has a very low Black population so this is not indicative of their incarceration policies. This is made with the variable created in the summary paragraph, the ratio of the black proportion of people in jail to the black proportion in a county's population.  
